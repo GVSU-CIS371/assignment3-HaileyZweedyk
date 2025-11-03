@@ -1,32 +1,58 @@
 <template>
   <div>
-    <Beverage :isIced="beverageStore.currentTemp === 'Cold'" />
+    <Beverage :isIced="currentTemp === 'Cold'" />
     <ul>
       <li>
-        <template v-for="temp in beverageStore.temps" :key="temp">
+        <template v-for="temp in temps" :key="temp">
           <label>
             <input
               type="radio"
               name="temperature"
               :id="`r${temp}`"
               :value="temp"
-              v-model="beverageStore.currentTemp"
+              v-model="currentTemp"
             />
             {{ temp }}
           </label>
         </template>
       </li>
     </ul>
-    <input type="text" placeholder="Beverage Name" />
-    <button>🍺 Make Beverage</button>
+    <ul>
+      <li>
+        <template v-for="(base, index) in bases" :key="index">
+          <label>
+            <input type="radio" :id="`r${index}`" name="base" :value="base" v-model="currentBase" />
+            {{ base.name }}
+          </label>
+        </template>
+      </li>
+    </ul>
+    <ul>
+      <li>
+        <template v-for="(creamer, index) in creamers" :key="index">
+          <label>
+            <input type="radio" :id="`r${index}`" name="creamer" :value="creamer" v-model="currentCreamer" />
+            {{ creamer.name }}
+          </label>
+        </template>
+      </li>
+    </ul>
+    <ul>
+      <li>
+        <template v-for="(syrup, index) in syrups" :key="index">
+          <label>
+            <input type="radio" :id="`r${index}`" name="syrup" :value="syrup" v-model="currentSyrup" />
+            {{ syrup.name }}
+          </label>
+        </template>
+      </li>
+    </ul>
   </div>
-  <div id="beverage-container" style="margin-top: 20px"></div>
 </template>
 
 <script setup lang="ts">
 import Beverage from "./components/Beverage.vue";
-import { useBeverageStore } from "./stores/beverageStore";
-const beverageStore = useBeverageStore();
+import { temps, currentTemp, bases, creamers, syrups, currentBase, currentCreamer, currentSyrup } from "./stores/beverage";
 </script>
 
 <style lang="scss">
@@ -44,3 +70,5 @@ ul {
   list-style: none;
 }
 </style>
+
+
