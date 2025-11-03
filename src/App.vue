@@ -3,6 +3,11 @@
     <Beverage :isIced="currentTemp === 'Cold'" />
     <ul>
       <li>
+        <label for="name">Name:</label>
+        <input v-model="beverageName" id="name" placeholder="Enter beverage name" />
+        <button @click="makeBeverage">Make Beverage</button>
+      </li>
+      <li>
         <template v-for="temp in temps" :key="temp">
           <label>
             <input
@@ -52,7 +57,16 @@
 
 <script setup lang="ts">
 import Beverage from "./components/Beverage.vue";
+import { useBeverageStore } from './stores/beverageStore'
 import { temps, currentTemp, bases, creamers, syrups, currentBase, currentCreamer, currentSyrup } from "./stores/beverage";
+
+const store = useBeverageStore()
+const beverageName = ref('')
+
+const makeBeverage = () => {
+  store.makeBeverage(beverageName.value)
+  beverageName.value = ''
+}
 </script>
 
 <style lang="scss">
@@ -70,5 +84,4 @@ ul {
   list-style: none;
 }
 </style>
-
 
